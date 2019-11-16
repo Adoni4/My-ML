@@ -1,0 +1,250 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[2]:
+
+
+import cv2
+import numpy as np
+
+
+# In[3]:
+
+
+wang1=cv2.imread('./wang1.jpg')
+wang1
+
+
+# In[4]:
+
+
+wang1.shape
+
+
+# In[6]:
+
+
+cv2.imshow('wang',wang1)
+##等待键盘输入，是0，则无线等待
+cv2.waitKey(0)
+
+cv2.destroyAllWindows()
+
+
+# In[10]:
+
+
+##cv2读取图片颜色通道BGR，PIL读取图片RGB
+wang2=cv2.cvtColor(wang1,code=cv2.COLOR_BGR2GRAY)
+
+cv2.imshow('grey',wang2)
+cv2.waitKey(0)
+
+cv2.destroyAllWindows()
+
+
+# In[21]:
+
+
+cv2.COLOR_BGR2GRAY
+
+
+# In[11]:
+
+
+cv2.imwrite('./wang1_gray.jpg',wang2)
+
+
+# In[12]:
+
+
+wang1.shape
+
+
+# In[22]:
+
+
+ord('A')
+
+
+# In[20]:
+
+
+wang3=cv2.resize(wang1,dsize=(490,381))
+wang3.shape
+
+cv2.imshow('gray',wang3)
+while True:
+    if ord('q')==cv2.waitKey(1000):
+        break
+
+cv2.destroyAllWindows()
+
+
+# In[ ]:
+
+
+
+
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+import numpy as np
+import cv2
+
+
+# In[2]:
+
+
+cap=cv2.VideoCapture('./video2.mp4')
+
+cap
+
+
+# In[3]:
+
+
+flag,frame = cap.read()
+print(flag,frame.shape)
+
+
+# In[4]:
+
+
+cv2.imshow('lin',frame)
+
+cv2.waitKey(0)
+
+cv2.destroyAllWindows()
+
+
+# In[5]:
+
+
+cap.get(propId=cv2.CAP_PROP_FOURCC)  ##帧数
+
+
+# In[6]:
+
+
+cap.get(propId=cv2.CAP_PROP_FRAME_COUNT)   ##图片数量
+
+
+# In[7]:
+
+
+cap.get(propId=cv2.CAP_PROP_FRAME_HEIGHT) 
+
+
+# In[8]:
+
+
+cap.get(propId=cv2.CAP_PROP_FRAME_WIDTH) 
+
+
+# In[9]:
+
+
+1000//25
+
+
+# In[13]:
+
+
+cap=cv2.VideoCapture('./video2.mp4')
+
+detector=cv2.CascadeClassifier('./haarcascade_frontalface_default.xml')
+
+while cap.isOpened():
+    flag,frame=cap.read()
+    
+    if flag == False:
+        break
+    
+    gray=cv2.cvtColor(frame,code = cv2.COLOR_BGR2GRAY)
+    
+    face_zone=detector.detectMultiScale(gray,scaleFactor=1.2,minNeighbors = 5)
+    
+    for x,y,w,h in face_zone:
+        cv2.circle(frame,center=(x+w//2,y+h//2),radius=w//2,color=[0,0,255],thickness=2)
+    cv2.imshow('lin',frame)
+    
+    if ord('q') == cv2.waitKey(20):
+        break
+cv2.destroyAllWindows()
+cap.release()
+
+
+# In[ ]:
+
+
+cv2.VideoWriter('./po.avi',cv2.VideoWriter_fourcc('P','M','4','2'),24,(w,h))
+
+
+# In[24]:
+
+
+cap=cv2.VideoCapture(0)   ##参数是0调取本地摄像头
+
+w=int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)) + 1
+h=int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)) + 1
+
+videoWriter=cv2.VideoWriter('./jie2.mp4',cv2.VideoWriter_fourcc('M','P','4','v'),16,(w,h))
+
+detector=cv2.CascadeClassifier('./haarcascade_frontalface_default.xml')
+
+while cap.isOpened():
+    flag,frame=cap.read()
+    
+    if flag == False:
+        break
+    
+    gray=cv2.cvtColor(frame,code = cv2.COLOR_BGR2GRAY)
+    
+    face_zone=detector.detectMultiScale(gray,scaleFactor=1.2,minNeighbors = 5)
+    
+    for x,y,w,h in face_zone:
+        cv2.circle(frame,center=(x+w//2,y+h//2),radius=w//2,color=[0,0,255],thickness=2)
+        
+    
+    videoWriter.write(frame)
+    if flag == False:
+        break
+        
+    cv2.imshow('lin',frame)    
+    
+    if ord('q') == cv2.waitKey(20):
+        break
+cv2.destroyAllWindows()
+cap.release()
+videoWriter.release()
+
+
+# In[23]:
+
+
+cap =cv2.VideoCapture('./jie.mp4')
+
+cap.get(cv2.CAP_PROP_FPS)
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
