@@ -1,0 +1,1291 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+from pandas import Series,DataFrame
+
+import pandas as pd
+
+import numpy as np
+
+#绘图，可视化
+import matplotlib.pyplot as plt
+
+
+# In[2]:
+
+
+s = Series(data = np.random.randint(0,150,size=10),index=list('abcdefghij'),name='python')
+s
+
+
+# In[3]:
+
+
+s2 = Series({'A':133,'B':111,'C':74,'D':57})
+s2
+
+
+# In[4]:
+
+
+type(s)
+
+
+# In[5]:
+
+
+s['d']
+
+
+# In[6]:
+
+
+s[['d','e']]
+
+
+# In[7]:
+
+
+s[0]
+
+
+# In[8]:
+
+
+s[2]
+
+
+# In[9]:
+
+
+#Series自身提供的
+s.iloc[0]
+
+
+# In[10]:
+
+
+s.loc['a']
+
+
+# In[11]:
+
+
+s.loc['b']
+
+
+# In[12]:
+
+
+s['a':'f']
+
+
+# ### Series
+
+# In[13]:
+
+
+s.shape
+
+
+# In[14]:
+
+
+s.index
+
+
+# In[15]:
+
+
+## Series中的值是ndaaray
+s.values
+
+
+# In[16]:
+
+
+s.head()
+
+
+# In[17]:
+
+
+s.tail()
+
+
+# In[18]:
+
+
+s[['d','i']]=np.NAN
+s
+
+
+# In[19]:
+
+
+##查找空数据
+cond = s.isnull()
+
+
+s[cond]
+
+
+# In[20]:
+
+
+##筛选非空数据
+cond = s.notnull()
+s[cond]
+
+
+# In[21]:
+
+
+s2.name = 'Math'
+s2
+
+
+# ## Series运算
+
+# In[22]:
+
+
+s+10
+
+
+# In[23]:
+
+
+s.add(10)
+
+
+# In[24]:
+
+
+s3 = s.add(10,fill_value=0)
+s3
+
+
+# In[25]:
+
+
+s3.astype(np.uint8)
+
+
+# In[26]:
+
+
+s.mean()
+
+
+# In[27]:
+
+
+s.median()
+
+
+# In[28]:
+
+
+s.max()
+
+
+# In[29]:
+
+
+s.std()
+
+
+# In[30]:
+
+
+## 幂运算
+s.pow(2)
+
+
+# In[31]:
+
+
+s.value_counts()
+
+
+# In[32]:
+
+
+li = ['ssss.mp3','sdfasd.avi','sdqwd.mp3','asdasd.ps']
+
+
+# In[33]:
+
+
+# 以.划分，取后缀
+def count_suffix(li):
+    
+    return Series([l.split('.')[-1] for l in li]).value_counts()[:2]
+
+
+# In[34]:
+
+
+count_suffix(li)
+
+
+# In[35]:
+
+
+s3 = Series({'A':88,'B':124,'C':67})
+s3
+
+
+# In[36]:
+
+
+s2+s3
+
+
+# In[37]:
+
+
+s2.add(s3,fill_value=0)
+
+
+# # DataFrame
+
+# In[38]:
+
+
+df = DataFrame(data={'python':np.random.randint(0,150,size=5),
+                     'Math':np.random.randint(0,150,size=5),
+                    'En':np.random.randint(0,150,size=5)},
+              index = list('ABCDE'))
+df
+
+
+# In[39]:
+
+
+df2 = DataFrame(data = np.random.randint(0,150,size = (10,4)),
+                index = list('ABCDEFGHIJ'),
+                columns = ['Python','Math','En','Physic'])
+df2
+
+
+# In[40]:
+
+
+df2.to_csv('./data.txt')
+
+
+# In[41]:
+
+
+#保存
+df2.to_excel('./data.xlsx')
+
+
+# In[42]:
+
+
+df3 = pd.read_csv('./data.txt')
+df3
+
+
+# In[43]:
+
+
+df3 = pd.read_csv('./data.txt')
+df4 = df3.rename({'Unnamed: 0':'index'},axis = 1)
+df4.set_index(keys = 'index')
+
+
+# In[44]:
+
+
+pd.read_excel('./data.xlsx')
+
+
+# In[45]:
+
+
+# 结构化数据 sql  
+# 半结构化数据 xml，json
+# 非结构化数据 网页内容
+
+
+# In[46]:
+
+
+df.columns
+
+
+# In[47]:
+
+
+df.values
+
+
+# In[48]:
+
+
+df.dtypes
+
+
+# ### DataFrame索引
+
+# In[49]:
+
+
+df2
+
+
+# In[50]:
+
+
+df2.En
+
+
+# In[51]:
+
+
+df2['Math']
+
+
+# In[52]:
+
+
+df2[['Math','En']]
+
+
+# In[53]:
+
+
+df2.loc['A']
+
+
+# In[54]:
+
+
+df2.loc[['A','C']]
+
+
+# In[55]:
+
+
+df2.iloc[[3,5]]
+
+
+# In[56]:
+
+
+df2
+
+
+# In[57]:
+
+
+df2['Math']['C']
+
+
+# In[58]:
+
+
+df2.loc['B','En']
+
+
+# In[59]:
+
+
+df2['A':'F']
+
+
+# In[60]:
+
+
+df2.iloc[0:5]
+
+
+# In[61]:
+
+
+df2.loc['Python':'En']
+
+
+# In[62]:
+
+
+df2.iloc[:,1:3]
+
+
+# ## DataFrame运算
+
+# In[63]:
+
+
+df2 - 10 
+
+
+# In[64]:
+
+
+## 几次方
+df2.pow(2)
+
+
+# In[65]:
+
+
+df2.divide(3).round(2)
+
+
+# In[66]:
+
+
+##协方差
+df2.cov()
+
+
+# In[67]:
+
+
+df2.corr()
+
+
+# In[68]:
+
+
+df2.all()
+
+
+# In[69]:
+
+
+df2.var()
+
+
+# In[70]:
+
+
+df2.info()
+
+
+# In[71]:
+
+
+df2.describe()
+
+
+# In[ ]:
+
+
+
+
+
+# In[72]:
+
+
+df1 = DataFrame(np.random.randint(0,150,size = (5,3)),index = list('ABCDE'),columns=['Python','Math','En'])
+df1
+
+
+# In[73]:
+
+
+df2 = DataFrame(np.random.randint(0,150,size = (6,3)),index = list('ABCDEF'),columns=['Python','Math','En'])
+df2
+
+
+# In[74]:
+
+
+df1 + df2
+
+
+# In[75]:
+
+
+df3 = df1.add(df2,fill_value=0)
+df3
+
+
+# In[76]:
+
+
+df3.loc['A':'E'] = df3.loc['A':'E']/2
+
+
+# In[77]:
+
+
+df3
+
+
+# In[ ]:
+
+
+
+
+
+# In[78]:
+
+
+df1
+
+
+# In[79]:
+
+
+s1 = df1.loc['A']
+s1
+
+
+# In[80]:
+
+
+df1
+
+
+# In[81]:
+
+
+df1.add(s1)
+
+
+# In[82]:
+
+
+df1.add(s1,axis = 'columns')
+
+
+# In[83]:
+
+
+s2 = df1.Python
+s2
+
+
+# In[84]:
+
+
+df1.add(s2,axis = 'index')
+
+
+# # 处理丢失数据
+# 
+
+# In[85]:
+
+
+# 有两种丢失数据 None，np.nan(Nan)
+
+
+# In[86]:
+
+
+import pandas as pd
+
+from pandas import Series,DataFrame
+
+import numpy as np
+
+
+# In[87]:
+
+
+df = DataFrame(np.random.randint(0,150,size=(150,3)),columns = ['Python','Math','En'])
+df
+
+
+# In[88]:
+
+
+for i in range(15):
+    index = np.random.randint(0,150,size=1)[0]
+    column = np.random.randint(0,3,size=1)[0]
+    df.iloc[index,column] = None
+
+
+# In[89]:
+
+
+df
+
+
+# In[90]:
+
+
+df.info()
+
+
+# In[91]:
+
+
+cond = df.isnull().any(axis = 1)
+df[cond]
+
+
+# In[92]:
+
+
+#非空数据
+cond = df.notnull().all(axis = 1)
+
+df[cond]
+
+
+# In[93]:
+
+
+df.dropna()
+
+
+# In[94]:
+
+
+df
+
+
+# In[95]:
+
+
+df.drop(labels =['En'],axis = 1)
+
+
+# In[96]:
+
+
+cond = df.isnull().any(axis = 1)
+index= df[cond].index
+index
+
+
+# In[97]:
+
+
+df2 = df.drop(labels=index)
+df2
+
+
+# In[98]:
+
+
+cond = (df2 < 60).any(axis =1)
+
+index = df2[cond].index
+df2.drop(labels = index )
+
+
+# In[99]:
+
+
+#平均分小于80过滤
+cond = df2.mean(axis=1) < 80
+
+index = df2[cond].index
+df2.drop(index)
+
+
+# In[100]:
+
+
+#小于30，大于100
+cond1 = df2.mean(axis=1)<30
+cond1
+
+
+# In[101]:
+
+
+cond2 = df2.mean(axis=1)>100
+cond2
+
+
+# In[102]:
+
+
+#或运算
+cond = cond1|cond2
+
+df2[cond]
+
+
+# In[ ]:
+
+
+
+
+
+# In[103]:
+
+
+df = DataFrame(np.random.randint(0,150,size=(5,3)),columns=['Pyhton','En','Math'])
+df
+
+
+# In[104]:
+
+
+df['Pyhton'][0]=None
+df['En'][3]=np.NaN
+
+
+# In[105]:
+
+
+type(np.NaN)
+
+
+# In[ ]:
+
+
+
+
+
+# In[106]:
+
+
+df
+
+
+# In[107]:
+
+
+df.fillna(60)
+
+
+# In[108]:
+
+
+df.fillna(value=df.mean())
+
+
+# In[109]:
+
+
+#中位数
+df.fillna(value =df.median())
+
+
+# In[110]:
+
+
+df
+
+
+# In[111]:
+
+
+#向前或向后填充 
+'''method : {'backfill', 'bfill', 'pad', 'ffill', None}, default None
+    Method to use for filling holes in reindexed Series
+    pad / ffill: propagate last valid observation forward to next valid
+    backfill / bfill: use NEXT valid observation to fill gap'''
+df.fillna(method='ffill')
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:#!/usr/bin/env python
+# coding: utf-8
+
+# ## 多层索引
+
+# In[1]:
+
+
+import numpy as np
+import pandas as pd
+from pandas import Series,DataFrame
+
+
+# In[2]:
+
+
+s = Series(np.random.randint(0,150,size=6),index=pd.MultiIndex.from_product([['A','B','C'],['期中','期末']]))
+
+s
+
+
+# In[3]:
+
+
+# 行多层索引
+df = DataFrame(np.random.randint(0,150,size=(20,3)),columns=['Python','Math','En'],
+              index = pd.MultiIndex.from_product([list('ABCDE'),['期中','期末'],['模拟一','模拟二']]))
+
+df
+
+
+# In[4]:
+
+
+# 列多层索引
+df2 = DataFrame(np.random.randint(0,150,size=(5,6)),
+                columns=pd.MultiIndex.from_product([['Python','Math','En'],['期中','期末']]),
+                index = list('ABCDE'))
+
+df2
+
+
+# In[5]:
+
+
+df
+
+
+# In[6]:
+
+
+df['Python']
+
+
+# In[7]:
+
+
+df.loc['A']
+
+
+# In[8]:
+
+
+df.loc[['A','B']]
+
+
+# In[9]:
+
+
+df.iloc[0]
+
+
+# In[10]:
+
+
+df['A':'C']
+
+
+# In[11]:
+
+
+df.loc['A':'B']
+
+
+# In[12]:
+
+
+df.iloc[0:3]
+
+
+# In[13]:
+
+
+df.loc['A','期末','模拟一']['Python']
+
+
+# In[14]:
+
+
+df
+
+
+# In[15]:
+
+
+df.mean(axis= 0,level=0)
+
+
+# In[16]:
+
+
+df.mean(axis=0,level=1)
+
+
+# ## 索引的堆和栈
+
+# In[17]:
+
+
+#行变列
+df.unstack()
+
+
+# In[18]:
+
+
+df2
+
+
+# In[19]:
+
+
+df2.stack(level=0)
+
+
+# In[20]:
+
+
+df
+
+
+# In[21]:
+
+
+df.unstack(level=0)
+
+
+# In[22]:
+
+
+df.unstack(level=[-1,0])
+
+
+# In[23]:
+
+
+df.unstack(level=[0,1])
+
+
+# In[24]:
+
+
+s = df['Python']
+s
+
+
+# In[25]:
+
+
+s.unstack()
+
+
+# ## numpy的级联
+
+# In[26]:
+
+
+import numpy as np
+
+import pandas as pd
+
+from pandas import Series,DataFrame
+
+
+# In[27]:
+
+
+nd1 = np.random.randint(0,10,size=(4,5))
+
+nd2 = np.random.randint(0,10,size=(7,5))
+
+nd3 = np.random.randint(0,10,size=(4,8))
+
+
+# In[28]:
+
+
+b = np.random.randint(0,10,size = (11,5))
+
+
+# In[29]:
+
+
+c = np.concatenate([nd1,nd2],axis=0,out=b)
+
+
+# In[30]:
+
+
+b
+
+
+# In[31]:
+
+
+np.concatenate((nd1,nd3),axis = 1)
+
+
+# ## pandas级联
+
+# In[32]:
+
+
+df1 = DataFrame(np.random.randint(0,150,size= (5,3)),columns=['Python','Math','En'],index = list('ABCDE'))
+
+df2 = DataFrame(np.random.randint(0,150,size= (5,3)),columns=['Python','Math','En'],index = list('ABCDE'))
+
+display(df1,df2)
+
+
+# In[33]:
+
+
+pd.concat([df1,df2])
+
+
+# In[34]:
+
+
+df3 = DataFrame(np.random.randint(0,150,size=(5,3)),columns=['Chinese','Physic','Chem'],index=list('QWRTY'))
+
+df3
+
+
+# In[35]:
+
+
+df4 = pd.concat([df1,df3],axis=1)
+
+df4.fillna(0)
+
+
+# In[36]:
+
+
+df1
+
+
+# In[37]:
+
+
+df5=DataFrame(np.random.randint(0,150,size=(5,3)),columns=['Python','Math','Java'],index=list('ABCGH'))
+df5
+
+
+# In[38]:
+
+
+pd.concat([df1,df5])
+
+
+# In[39]:
+
+
+pd.concat([df1,df5],join = 'inner')
+
+
+# In[40]:
+
+
+pd.concat([df1,df5],join_axes=[df1.columns])
+
+
+# In[41]:
+
+
+pd.concat([df1,df5])
+
+
+# In[42]:
+
+
+pd.concat([df1,df5],ignore_index=True) ##忽略行索引
+
+
+# In[43]:
+
+
+##期中
+df1
+
+
+# In[44]:
+
+
+##期末
+df6=DataFrame(np.random.randint(0,150,size=(5,3)),columns=df1.columns,index=df1.index)
+df6
+
+
+# In[45]:
+
+
+df7 = pd.concat([df1,df6],keys=['期中','期末'])
+df7
+
+
+# In[46]:
+
+
+df7.unstack(level=0).stack()
+
+
+# In[47]:
+
+
+display(df1,df2)
+
+
+# In[48]:
+
+
+df1.append(df2)
+
+
+# In[49]:
+
+
+df1 = DataFrame({'id':[1,10,1024],'name':['po','alisa','Michael'],'sex':['male','female','male']})
+df1
+
+
+# In[50]:
+
+
+df2 = DataFrame({'id':[1,11,1025],'salary':['10000','20000','30000'],'age':['20','30','40']})
+df2
+
+
+# In[51]:
+
+
+pd.concat([df1,df2])
+
+
+# In[52]:
+
+
+## 一对一
+df1.merge(df2)
+
+
+# In[53]:
+
+
+## 多对一
+df2 = DataFrame({'id':[1,1,1],'salary':['10000','20000','30000'],'age':['20','30','40']})
+df2
+
+
+# In[54]:
+
+
+df1.merge(df2)
+
+
+# In[55]:
+
+
+## 多对多合并
+df3 = DataFrame({'id':[1,1,1],'name':['po','alisa','Michael'],'sex':['male','female','male']})
+df3
+
+
+# In[56]:
+
+
+pd.merge(df2,df3)
+
+
+# In[57]:
+
+
+df1 = DataFrame({'id':[1,10,1024],'name':['po','alisa','Michael'],'sex':['male','female','male']})
+df1
+df2 = DataFrame({'id':[1,11,1025],'name':['softpo','alisa','Michael'],'age':['20','30','40']})
+df2
+display(df1,df2)
+
+
+# In[58]:
+
+
+df1 = DataFrame({'id':[1,10,1024],'name':['po','alisa','Michael'],'sex':['male','female','male']})
+df1
+df2 = DataFrame({'id':[1,11,1025],'name':['softpo','alisa','Michael'],'age':['20','30','40']})
+df2
+display(df1,df2)
+
+
+# In[59]:
+
+
+df1
+
+
+# In[60]:
+
+
+df2 = DataFrame({'Id':[1,11,1025],'name':['softpo','alisa','Michael'],'age':['20','30','40']})
+df2
+
+
+# In[61]:
+
+
+display(df1,df2)
+
+
+# In[62]:
+
+
+pd.merge(df1,df2,left_on='id',right_on='Id')
+
+
+# In[63]:
+
+
+##内合并与外合并 how : {'left', 'right', 'outer', 'inner'}, default 'inner'
+pd.merge(df1,df2,how = 'outer',left_on='id',right_on='Id') 
+
+
+# In[64]:
+
+
+## 左合并，左边数据都保留
+pd.merge(df1,df2,how = 'left',left_on='id',right_on='Id') 
+
+
+# In[65]:
+
+
+df1 = DataFrame({'id':[1,10,1024],'name':['po','alisa','Michael'],'sex':['male','female','male']})
+df1
+df2 = DataFrame({'id':[1,11,1025],'name':['softpo','alisa','Michael'],'age':['20','30','40']})
+df2
+display(df1,df2)
+
+
+# In[66]:
+
+
+pd.merge(df1,df2,on = 'id',suffixes=('_A','_B'))
+
+
+# In[ ]:
+
+
+
+
+
+# In[67]:
+
+
+df = DataFrame(np.random.randint(0,150,size= (10,3)),columns=['Python','Math','En'],index = list('ABCDEFHIJL'))
+df
+
+
+# In[68]:
+
+
+df_sum = DataFrame(df.sum(axis=1),columns=['sum'])
+df_sum
+
+
+# In[69]:
+
+
+pd.merge(df,df_sum,left_index=True,right_index=True)
+
+
+# In[ ]:
+
+
+
+
+
+
